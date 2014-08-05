@@ -10,8 +10,8 @@
 
 int coinvalue[6] = {1,2,4,8,16,32}; // 硬貨の種類
 int remaindermemo[63]; // 支払い残額のメモ、再帰してforで使い回すので配列化
-int dp[63]; // 使った硬貨の種類のメモ、上書き上等
-int dpanswer[63]; // 使った硬貨の種類の答え記録用
+int dp[63]; // 使った硬貨の組み合わせ記録、上書き上等
+int dpanswer[63]; // 使った硬貨の組み合わせの答え記録用
 int minnum=0; // 硬貨の最低使用枚数
 int hit=0; // 残額が丁度0になった組み合わせの数
 
@@ -28,6 +28,8 @@ void payment(int i,int remainder){
     if (i > 10){return;} // 組み合わせが多過ぎて時間がかかるので適当に切り上げ
     remaindermemo[i]=remainder;
     //NSLog(@"payrest:%d,i:%d",restmemo[i],i);
+    
+    
     if (remaindermemo[i] > 0){
         for (int j = 5; j >= 0; j--){  // 硬貨の額の大きい方から試行
             dp[i] = coinvalue[j];
