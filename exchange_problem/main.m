@@ -22,25 +22,27 @@ void cpdp(int k){
     }
 }
 
-// 残額63からコインの種類毎に引いてみる深さ優先探索
+// 残額63から硬貨の種類毎に引いてみる深さ優先探索
 void payment(int i,int remainder){
     
-    if (i > 10){return;} // 組み合わせが多過ぎて時間がかかるので適当に切り上げ
+    if (i > 63){return;} // 1x63が最大枚数
     remaindermemo[i]=remainder;
     //NSLog(@"payrest:%d,i:%d",restmemo[i],i);
     
     
     if (remaindermemo[i] > 0){
         for (int j = 5; j >= 0; j--){  // 硬貨の額の大きい方から試行
-            dp[i] = coinvalue[j];
-            payment(i+1, remaindermemo[i] -= coinvalue[j]); // 残額から硬貨の額を引いて再帰呼出、深さ優先
-            remaindermemo[i] += coinvalue[j]; // 呼出で残額から引いた硬貨の額を復元
+            if(i==0 | coinvalue[j]<=dp[i-1]){ // 順列ではなく組み合わせにしたいので、前回より大きい硬貨は選ばない
+                dp[i] = coinvalue[j];
+                payment(i+1, remaindermemo[i] -= coinvalue[j]); // 残額から硬貨の額を引いて再帰呼出、深さ優先
+                remaindermemo[i] += coinvalue[j]; // 呼出で残額から引いた硬貨の額を復元
+            }
         }
     } else if (remaindermemo[i] == 0){
         hit++;
         if(minnum == 0 | minnum > i){
             minnum = i;
-            cpdp(i+1); // 答えの組み合わせをメモ
+            cpdp(i); // 答えの組み合わせをメモ
         }
     }
 }
