@@ -9,9 +9,9 @@
 #import <Foundation/Foundation.h>
 
 
-const int kind = 6; // 硬貨の種類の数
-int coinvalue[kind] = {1,2,4,8,16,32}; // 硬貨の種類
-const int imax = 63; // 探索最深度
+const int kind = 3; // 硬貨の種類の数
+int coinvalue[kind] = {1,4,9}; // 硬貨の種類
+const int imax = 17; // 探索最深度
 int remaindermemo[imax]; // 支払い残額のメモ、再帰してforで使い回すので配列化
 int dp[imax]; // 使った硬貨の組み合わせ記録、上書き上等
 int dpanswer[imax]; // 使った硬貨の組み合わせの答え記録用
@@ -26,10 +26,10 @@ void cpdp(int k){
     }
 }
 
-// 残額63から硬貨の種類毎に引いてみる深さ優先探索
+// 残額17から硬貨の種類毎に引いてみる深さ優先探索
 void payment(int i,int remainder){
     
-    if (i > imax){return;} // 1x63が最大枚数なので、終了条件
+    if (i > imax){return;} // 1x17が最大枚数なので、終了条件
     remaindermemo[i]=remainder;
     //NSLog(@"payrest:%d,i:%d",restmemo[i],i);
     
@@ -57,7 +57,7 @@ int main(int argc, const char * argv[])
     @autoreleasepool {
         
         // iの初期値と残額を渡して探索開始
-        payment(0,63);
+        payment(0,17);
         
         // 出力
         NSLog(@"HIT数%d",hit);
